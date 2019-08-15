@@ -1,0 +1,89 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+​
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+​
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+​
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Bordered Table</h2>
+<div id="todel"> 
+  <table class="table table-bordered" >
+    <thead>
+   <!--    <div id="{{data.id}}"> -->
+      <tr >
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>remove</th>
+        <th>update</th>
+      </tr>
+   <!--  </div> -->
+    </thead>
+    <tbody>
+{% for data in obj %}
+      <tr id="{{data.id}}">
+        <td>{{data.firstname}}</td>
+        <td>{{data.lastname}}</td>
+        <td>{{data.email}}</td>
+        <td> <a  class="btn btn-danger btn delete" rowid="{{data.id}}" >delete</a>
+       <!--  <input type="hidden" name="" id="studnet_id" value="{{data.id}}"></td>
+ -->
+        
+        <td> <a href="/update/{{ data.id }}" class="btn">update</a></td>
+        
+      </tr>
+{% endfor %}
+    </tbody>
+  </table>
+  </div> 
+
+</div>
+<div id="new"></div>
+  <div>
+<script type="text/javascript">
+
+$(".delete").click(function(e){
+call_url = "/delete/"+ this.getAttribute("rowid");  
+delrow=this.getAttribute("rowid");
+
+$.ajax({
+          type:'POST',
+          url:call_url,
+          dataType: 'JSON',
+         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+
+          sucess:function(obj){
+            alert("usama");
+          },
+          error:function(obj)
+          {           
+            console.log("erorrr")
+            alert("error");
+           // document.getElementById('todel').remove();
+            document.getElementById(delrow).remove();
+          }  
+    }); 
+  });
+
+
+</script>
+​
+
+</body>
+
+
+
+</html>
